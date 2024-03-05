@@ -12,20 +12,37 @@
 
 int main(int argc, char** argv) {
 
-    // Poor formatting, user can insert commands.
-    print(argv[1]);
+    char option = argv[2];
 
-    // Stack Buffer Overflow
-    stack_weakness(argv[1]);
+    switch(option){
+        case 'p':
+            // Poor formatting, user can insert commands.
+            print(argv[1]);
+            break;
 
-    // Heap Buffer Overflow
-    heap_weakness();
+        case 's':
+            // Stack Buffer Overflow
+            stack_weakness(argv[1]);
+            break;
 
-    // Integer Vulnerabilities
-    integer_weakness();
+        case 'h':
+            // Heap Buffer Overflow
+            heap_weakness();
+            break;
 
-    // Dangling Pointers
-    dangling_pointer();
+        case 'i':
+            // Integer Vulnerabilities
+            integer_weakness();
+            break;
+
+        case 'd':
+            // Dangling Pointers
+            dangling_pointer();
+            break;
+        default:
+            print("have a nice day!");
+    }
+    
 }
 
 // Using examples from https://cwe.mitre.org/data/definitions/121.html
