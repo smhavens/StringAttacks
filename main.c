@@ -50,6 +50,7 @@ void print_weakness(char* vulnerability) {
 }
 
 // Using examples from https://cwe.mitre.org/data/definitions/121.html
+// Another good example is from https://www.thegeekstuff.com/2013/06/buffer-overflow/
 int stack_weakness(char* vulnerability) {
     char buf[BUFSIZE];
     strcpy(buf, vulnerability);
@@ -83,6 +84,15 @@ int integer_weakness(int x, int y) {
     return 0;
 }
 
-int dangling_pointer() {
+//code from https://www.geeksforgeeks.org/dangling-void-null-wild-pointers/
+int* dangling_pointer() {
+
+    int* ptr = (int*)malloc(sizeof(int));
+    // int* bad_ptr = ptr;
+
+    // This makes ptr point to something we don't know!
+    free(ptr);
+    printf(ptr);
+
     return 0;
 }
