@@ -1,5 +1,5 @@
-#ifndef _MAIN_H_
-#define _MAIN_H_
+#ifndef _WEAK_CODING_H_
+#define _WEAK_CODING_H_
 
 
 void print_weakness(char* vulnerability);

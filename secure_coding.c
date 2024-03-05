@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include "main.h"
 
-#define BUFSIZE 256
+#define BUFSIZE 32
 
 int main(int argc, char** argv) {
 
@@ -17,27 +17,27 @@ int main(int argc, char** argv) {
     switch(option){
         case 'p':
             // Poor formatting, user can insert commands.
-            print_weakness(argv[2]);
+            print_secure(argv[2]);
             break;
 
         case 's':
             // Stack Buffer Overflow
-            stack_weakness(argv[2]);
+            stack_secure(argv[2]);
             break;
 
         case 'h':
             // Heap Buffer Overflow
-            heap_weakness(argv[2]);
+            heap_secure(argv[2]);
             break;
 
         case 'i':
             // Integer Vulnerabilities
-            integer_weakness(argv[2], argv[3]);
+            integer_secure(argv[2], argv[3]);
             break;
 
         case 'd':
             // Dangling Pointers
-            dangling_pointer();
+            secure_pointer();
             break;
         default:
             printf("have a nice day!");
@@ -45,29 +45,31 @@ int main(int argc, char** argv) {
     
 }
 
-void print_weakness(char* vulnerability) {
-    printf(vulnerability);
+void print_secure(char* vulnerability) {
+    printf("%s", vulnerability);
     // Example output from tool is
     // Print Vulnerability detected on line 49, possible solution is 'printf("%s", vulnerability);' to sanitize input.
 }
 
 // Using examples from https://cwe.mitre.org/data/definitions/121.html
 // Another good example is from https://www.thegeekstuff.com/2013/06/buffer-overflow/
-int stack_weakness(char* vulnerability) {
+int stack_secure(char* vulnerability) {
     char buf[BUFSIZE];
-    strcpy(buf, vulnerability);
-    printf(buf);
+    int pass = 0;
+    strncpy(buf, vulnerability);
+    printf(pass);
     return 0;
 
     // Stack Buffer Overflow Vulnerability detected on line 58, possible solution is 'strncpy(buf, vulnerability);' to ensure length.
 }
 
 // Using examples from https://cwe.mitre.org/data/definitions/121.html
-int heap_weakness(char* vulnerability) {
+int heap_secure(char* vulnerability) {
     char *buf;
     buf = (char *)malloc(sizeof(char)*BUFSIZE);
-    strcpy(buf, vulnerability);
-    printf(buf);
+    int pass = 0;
+    strncpy(buf, vulnerability);
+    printf(pass);
     return 0;
 
     // Heap Buffer Overflow Vulnerability detected on line 69, possible solution is 'strncpy(buf, vulnerability);' to ensure length.
@@ -82,10 +84,15 @@ Here are some examples of exploiting integer overflow vulnerabilities:
     Integer Truncation Attack: An integer overflow vulnerability can also be used to perform an integer truncation attack, where the attacker inputs a large value that gets truncated when it is stored in a smaller data type, leading to unexpected results.
     Stack Overflow: An integer overflow vulnerability can lead to a stack overflow attack, where the attacker overflows a stack-allocated buffer, leading to a stack-based buffer overflow.
 */
-int integer_weakness(int x, int y) {
+int integer_secure(int x, int y) {
     // int x = 2147483647;
     // int y = 2147483647;
-    int z = x * y;
+    if (x != 0 ? y > INT_MAX / x : y < INT_MIN / x) {
+        int z = x * y;
+    }
+    else {
+        int z = 0;
+    }
     printf("%d\n", z);
     return 0;
 
@@ -97,7 +104,7 @@ int integer_weakness(int x, int y) {
 }
 
 //code from https://www.geeksforgeeks.org/dangling-void-null-wild-pointers/
-int* dangling_pointer() {
+int* secure_pointer() {
 
     int* ptr = (int*)malloc(sizeof(int));
     // int* bad_ptr = ptr;
