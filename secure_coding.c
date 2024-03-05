@@ -6,7 +6,7 @@
 // and finally dangling pointers.
 
 #include <stdio.h>
-#include "main.h"
+#include "secure_coding.h"
 
 #define BUFSIZE 32
 
@@ -111,6 +111,7 @@ int* secure_pointer() {
 
     // This makes ptr point to something we don't know!
     free(ptr);
+
     printf(ptr);
 
     return 0;

@@ -6,13 +6,13 @@
 // and finally dangling pointers.
 
 #include <stdio.h>
-#include "main.h"
+#include "weak_coding.h"
 
 #define BUFSIZE 32
 
 int main(int argc, char** argv) {
 
-    char option = argv[1];
+    char option = (char)(argv[1]);
 
     switch(option){
         case 'p':
@@ -32,7 +32,7 @@ int main(int argc, char** argv) {
 
         case 'i':
             // Integer Vulnerabilities
-            integer_weakness(argv[2], argv[3]);
+            integer_weakness(atoi(argv[2]), atoi(argv[3]));
             break;
 
         case 'd':
@@ -99,7 +99,7 @@ int integer_weakness(int x, int y) {
 }
 
 //code from https://www.geeksforgeeks.org/dangling-void-null-wild-pointers/
-int* dangling_pointer() {
+int dangling_pointer() {
 
     int* ptr = (int*)malloc(sizeof(int));
     // int* bad_ptr = ptr;
