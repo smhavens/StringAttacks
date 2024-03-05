@@ -47,6 +47,8 @@ int main(int argc, char** argv) {
 
 void print_weakness(char* vulnerability) {
     printf(vulnerability);
+    // Example output from tool is
+    // Print Vulnerability detected on line 49, possible solution is 'printf("%s", vulnerability);' to sanitize input.
 }
 
 // Using examples from https://cwe.mitre.org/data/definitions/121.html
@@ -56,6 +58,8 @@ int stack_weakness(char* vulnerability) {
     strcpy(buf, vulnerability);
     printf(buf);
     return 0;
+
+    // Stack Buffer Overflow Vulnerability detected on line 58, possible solution is 'strncpy(buf, vulnerability);' to ensure length.
 }
 
 // Using examples from https://cwe.mitre.org/data/definitions/121.html
@@ -65,6 +69,8 @@ int heap_weakness(char* vulnerability) {
     strcpy(buf, vulnerability);
     printf(buf);
     return 0;
+
+    // Heap Buffer Overflow Vulnerability detected on line 69, possible solution is 'strncpy(buf, vulnerability);' to ensure length.
 }
 
 // Using example from https://cqr.company/web-vulnerabilities/integer-overflow/
@@ -82,6 +88,12 @@ int integer_weakness(int x, int y) {
     int z = x * y;
     printf("%d\n", z);
     return 0;
+
+    // Integer Overflow Vulnerability detected on line 88, possible solution is 
+    // 88 'if (x != 0 ? y > INT_MAX / x : y < INT_MIN / x) {' 
+    // 89 'int z = x * y;'
+    // 90 '}' 
+    // to ensure fits into integer.
 }
 
 //code from https://www.geeksforgeeks.org/dangling-void-null-wild-pointers/
@@ -95,4 +107,6 @@ int* dangling_pointer() {
     printf(ptr);
 
     return 0;
+
+    // Dangling Pointer Vulnerability detected on line 106, possible solution is to add 'ptr = NULL;' on line 107.
 }
