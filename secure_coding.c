@@ -9,13 +9,16 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include <string.h>
 #include "secure_coding.h"
 
 #define BUFSIZE 32
+#define INT_MAX 2147483647
+#define INT_MIN -2147483648
 
 int main(int argc, char** argv) {
 
-    char option = argv[1];
+    char option = argv[1][0];
 
     switch(option){
         case 'p':
@@ -59,8 +62,8 @@ void print_secure(char* vulnerability) {
 int stack_secure(char* vulnerability) {
     char buf[BUFSIZE];
     int pass = 0;
-    strncpy(buf, vulnerability);
-    printf(pass);
+    strncpy(buf, vulnerability, BUFSIZE);
+    printf("%d\n", pass);
     return 0;
 
     // Stack Buffer Overflow Vulnerability detected on line 58, possible solution is 'strncpy(buf, vulnerability);' to ensure length.
@@ -71,8 +74,8 @@ int heap_secure(char* vulnerability) {
     char *buf;
     buf = (char *)malloc(sizeof(char)*BUFSIZE);
     int pass = 0;
-    strncpy(buf, vulnerability);
-    printf(pass);
+    strncpy(buf, vulnerability, BUFSIZE);
+    printf("%d\n", pass);
     return 0;
 
     // Heap Buffer Overflow Vulnerability detected on line 69, possible solution is 'strncpy(buf, vulnerability);' to ensure length.
@@ -90,11 +93,13 @@ Here are some examples of exploiting integer overflow vulnerabilities:
 int integer_secure(int x, int y) {
     // int x = 2147483647;
     // int y = 2147483647;
-    if (x != 0 ? y > INT_MAX / x : y < INT_MIN / x) {
-        int z = x * y;
+    int z = 0;
+    if (!(y > INT_MAX / x || y < INT_MIN / x)) {
+        z = x * y;
     }
     else {
-        int z = 0;
+        // int z = 0;
+        printf("Values are too large, setting answer to 0.\n");
     }
     printf("%d\n", z);
     return 0;
@@ -107,13 +112,14 @@ int integer_secure(int x, int y) {
 }
 
 //code from https://www.geeksforgeeks.org/dangling-void-null-wild-pointers/
-int* secure_pointer() {
+int secure_pointer() {
 
     int* ptr = (int*)malloc(sizeof(int));
     // int* bad_ptr = ptr;
 
     // This makes ptr point to something we don't know!
     free(ptr);
+    ptr = NULL;
 
     printf(ptr);
 

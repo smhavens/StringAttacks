@@ -1,7 +1,7 @@
 CC	= gcc
 CFLAGS	= -Wall
 LDFLAGS	=
-OBJFILES	= weak_coding.o
+OBJFILES	= secure_coding.o
 TARGET	= StringAttacks
 
 all: $(TARGET)
