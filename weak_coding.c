@@ -6,13 +6,18 @@
 // and finally dangling pointers.
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <unistd.h>
+#include <string.h>
 #include "weak_coding.h"
 
 #define BUFSIZE 32
+//aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 
 int main(int argc, char** argv) {
 
-    char option = (char)(argv[1]);
+    char option = (argv[1][0]);
 
     switch(option){
         case 'p':
@@ -22,6 +27,7 @@ int main(int argc, char** argv) {
 
         case 's':
             // Stack Buffer Overflow
+            // printf("Begging Stack Buffer Overflow Check");
             stack_weakness(argv[2]);
             break;
 
@@ -56,8 +62,9 @@ void print_weakness(char* vulnerability) {
 int stack_weakness(char* vulnerability) {
     char buf[BUFSIZE];
     int pass = 0;
+    // printf("In stack function");
     strcpy(buf, vulnerability);
-    printf(pass);
+    printf("%d", pass);
     return 0;
 
     // Stack Buffer Overflow Vulnerability detected on line 58, possible solution is 'strncpy(buf, vulnerability);' to ensure length.
@@ -69,7 +76,7 @@ int heap_weakness(char* vulnerability) {
     buf = (char *)malloc(sizeof(char)*BUFSIZE);
     int pass = 0;
     strcpy(buf, vulnerability);
-    printf(pass);
+    printf("%d", pass);
     return 0;
 
     // Heap Buffer Overflow Vulnerability detected on line 69, possible solution is 'strncpy(buf, vulnerability);' to ensure length.
@@ -105,8 +112,11 @@ int dangling_pointer() {
     // int* bad_ptr = ptr;
 
     // This makes ptr point to something we don't know!
+    printf(ptr);
+    printf("\n");
     free(ptr);
     printf(ptr);
+    printf("\n");
 
     return 0;
 
