@@ -63,6 +63,7 @@ Actual Output: "1"
 
 
 ### Dangling Pointer Vulnerability
+Dangling pointers occur when a pointer is access/used after the pointers variable becomes unavailable or is removed. 
 
 For example:
 Input = "./StringAttacks d"
