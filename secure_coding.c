@@ -38,7 +38,7 @@ int main(int argc, char** argv) {
 
         case 'i':
             // Integer Vulnerabilities
-            integer_secure(argv[2], argv[3]);
+            integer_secure(atoi(argv[2]), atoi(argv[3]));
             break;
 
         case 'd':
@@ -46,13 +46,13 @@ int main(int argc, char** argv) {
             secure_pointer();
             break;
         default:
-            printf("have a nice day!");
+            printf("Have a nice day!\n");
     }
     
 }
 
 void print_secure(char* vulnerability) {
-    printf("%s", vulnerability);
+    printf("%s\n", vulnerability);
     // Example output from tool is
     // Print Vulnerability detected on line 49, possible solution is 'printf("%s", vulnerability);' to sanitize input.
 }
