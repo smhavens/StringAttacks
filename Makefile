@@ -1,8 +1,10 @@
-CC	= gcc
-CFLAGS	= -Wall
-LDFLAGS	=
-OBJFILES	= secure_coding.o
+CC	= MALLOC_CHECK_=0 gcc
+CFLAGS	= -Wall -fno-stack-protector
+LDFLAGS	= 
+OBJFILES	= weak_coding.o
 TARGET	= StringAttacks
+# export MALLOC_CHECK_=0
+
 
 all: $(TARGET)
 
