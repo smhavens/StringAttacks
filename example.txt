@@ -1,0 +1,61 @@
+AST before change:
+  FileAST: 
+    FuncDef: 
+      Decl: foo, [], [], [], []
+        FuncDecl: 
+          ParamList: 
+            Decl: a, [], [], [], []
+              TypeDecl: a, [], None
+                IdentifierType: ['int']
+            Decl: b, [], [], [], []
+              TypeDecl: b, [], None
+                IdentifierType: ['int']
+          TypeDecl: foo, [], None
+            IdentifierType: ['void']
+      Compound: 
+    FuncDef: 
+      Decl: bar, [], [], [], []
+        FuncDecl: 
+          TypeDecl: bar, [], None
+            IdentifierType: ['void']
+      Compound: 
+
+AST after change:
+  FileAST: 
+    FuncDef: 
+      Decl: foo, [], [], [], []
+        FuncDecl: 
+          ParamList: 
+            Decl: a, [], [], [], []
+              TypeDecl: a, [], None
+                IdentifierType: ['int']
+            Decl: b, [], [], [], []
+              TypeDecl: b, [], None
+                IdentifierType: ['int']
+            Decl: _hidden, [], [], [], []
+              TypeDecl: _hidden, [], []
+                IdentifierType: ['int']
+          TypeDecl: foo, [], None
+            IdentifierType: ['void']
+      Compound: 
+    FuncDef: 
+      Decl: bar, [], [], [], []
+        FuncDecl: 
+          ParamList: 
+            Decl: _hidden, [], [], [], []
+              TypeDecl: _hidden, [], []
+                IdentifierType: ['int']
+          TypeDecl: bar, [], None
+            IdentifierType: ['void']
+      Compound: 
+
+Code after change:
+void foo(int a, int b, int _hidden)
+{
+}
+
+void bar(int _hidden)
+{
+}
+
+
